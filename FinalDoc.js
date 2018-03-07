@@ -1,9 +1,3 @@
-//
-// FinalDoc
-// Version : 0.1
-// Purpose: Google Apps Script that can finalize a document by removing the revision history and all editor access other then the owner. 
-// Last Edit - Mar 7, 2018 by D.Roberts
-//
 
 // Will be used for possible sidebar functionality. 
 function onOpen()
@@ -12,7 +6,6 @@ function onOpen()
   
 }
 
-//Main Function to finalize document via google apps. 
 function FinalizeDoc() {
   
   //Find active document to be finalized and look up list of editors
@@ -43,7 +36,9 @@ function FinalizeDoc() {
  //Lookup the info of the original document 
   var fileID = DocumentApp.getActiveDocument().getId();
   var fileURL = DocumentApp.getActiveDocument().getUrl();
+  var originalName = DocumentApp.getActiveDocument().getName();
   var newFileName = (DocumentApp.getActiveDocument().getName().concat(" - Final"));
+  
   //var filething = DocumentApp.GetActive
   Logger.log(fileID);
   Logger.log(fileURL);
@@ -54,11 +49,14 @@ function FinalizeDoc() {
   var newDriveFile = fileDriveID.makeCopy(newFileName); 
   var newDriveURL = newDriveFile.getUrl();
   Logger.log(newDriveURL);
-   
+  var ownerEmail = Session.getActiveUser().getEmail();
+  
+  //Send email to the owner with details on the orginal and final documents. 
+  var htmlBody = new String("Document Finalized: " + originalName, "Original File Name" + "\n" + "Original URL " + fileURL);
+  MailApp.sendEmail(ownerEmail,"donotreply@edmonton.ca","Document Finalized: " + originalName, "Original File Name" + "\n" + "Original URL " + fileURL);
+  
  
   //Display Final Message to User
   //DocumentApp.getUi().alert("Finalize this Document","My message to the end user.",DocumentApp.getUi().ButtonSet.OK);
   
 }
-
-
