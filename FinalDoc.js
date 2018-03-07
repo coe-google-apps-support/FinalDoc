@@ -11,7 +11,8 @@ function onOpen()
   DocumentApp.getUi().createAddonMenu().addItem('Finalize Document', 'showSidebar');
   
 }
-//
+
+//Main Function to finalize document via google apps. 
 function FinalizeDoc() {
   
   //Find active document to be finalized and look up list of editors
@@ -30,20 +31,34 @@ function FinalizeDoc() {
    Logger.log(editors);
    for (var i = 0; i < editors.length; i++) {
      currentDoc.removeEditor(editors[i]);
+    
     };
  } else if (response.getSelectedButton() == ui.Button.NO) {
    Logger.log('The user did not confirm finalization process');
  } else {
    Logger.log('The user clicked the close button in the dialog\'s title bar.');
  }
- 
-  //Retrieve revision var SpreadSheet = SpreadsheetApp.getActiveSpreadsheet();
+
   
-  //Delete revision history
+ //Lookup the info of the original document 
+  var fileID = DocumentApp.getActiveDocument().getId();
+  var fileURL = DocumentApp.getActiveDocument().getUrl();
+  var newFileName = (DocumentApp.getActiveDocument().getName().concat(" - Final"));
+  //var filething = DocumentApp.GetActive
+  Logger.log(fileID);
+  Logger.log(fileURL);
+  Logger.log(newFileName);
   
-  //Retrieve Editors
+  //Make a copy of the original file
+  var fileDriveID = DriveApp.getFileById(fileID);
+  var newDriveFile = fileDriveID.makeCopy(newFileName); 
+  var newDriveURL = newDriveFile.getUrl();
+  Logger.log(newDriveURL);
+   
  
   //Display Final Message to User
   //DocumentApp.getUi().alert("Finalize this Document","My message to the end user.",DocumentApp.getUi().ButtonSet.OK);
   
 }
+
+
