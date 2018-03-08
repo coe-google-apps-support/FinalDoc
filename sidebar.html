@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+<title>Finalize Your Document</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+ <!-- Contact Section -->
+  <div class="w3-container w3-padding-32" id="contact">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Finalize Your Document</h3>
+    <p>This add-on allows you to finalize a Google doc by automatically removing all exisiting editor access and creating a new final version of the document that has no revision history</p>
+    <p>Use the buttons below to remove editor access, make a final copy or both. </p>
+    <button class="w3-button w3-blue w3-section" type="submit">
+        <i class="fa fa-paper-plane"></i> Remove Editors
+      </button>
+      <button class="w3-button w3-blue w3-section" type="submit">
+        <i class="fa fa-paper-plane"></i> Make a Final Copy
+      </button>
+        <button class="w3-button w3-blue w3-section" type="submit" onclick="google.script.run.FinalizeDoc()">
+        <i class="fa fa-paper-plane"></i> Remove Editors + Make Final
+      </button>
+  </div>
+  </body>
+</html>
+
+
