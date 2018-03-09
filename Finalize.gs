@@ -48,7 +48,7 @@ function RemoveEditors() {
    var ownerEmail = Session.getActiveUser().getEmail();
    Logger.log(ownerEmail);
    //var htmlBody = new String("Editors Removed from: " + originalName, "Original File Name" + "\n" + "Original URL " + fileURL);
-   MailApp.sendEmail(ownerEmail,"donotreply@edmonton.ca","Editors Removed from " + originalName, "The following editors have been removed from " + originalName + "\n\n" + "Editor List: " + editors + "\n\n" + "Note: The owner of the doc will still be able to edit it.");
+   MailApp.sendEmail(ownerEmail,"donotreply@edmonton.ca","Editors Removed from " + originalName, "This is a notification from Final Doc confirming that the following editors have been removed from " + originalName + "\n\nEditors Removed: " + editors + "\nNote: The owner of the doc will not be removed as an editor.");
    
   //Display Final Message to User telling them about email confirmation. 
   DocumentApp.getUi().alert("Editor Access has been removed","All editor access has been removed.\n\nA confirmation email will be sent to you with additional details.",DocumentApp.getUi().ButtonSet.OK);
@@ -91,7 +91,7 @@ function MakeFinalCopy() {
     //Send email to the owner with details on the orginal and final documents. 
   var ownerEmail = Session.getActiveUser().getEmail();
   var htmlBody = new String("Document Finalized: " + originalName, "Original File Name" + "\n" + "Original URL " + fileURL);
-   MailApp.sendEmail(ownerEmail,"donotreply@edmonton.ca","Document Finalized: " + originalName, "Original File Name: " + originalName + "\n" + "Original Document URL: " + fileURL);
+     MailApp.sendEmail(ownerEmail,"donotreply@edmonton.ca","Document Finalized: " + originalName, "This is a notification from Final Doc confirming you have made a final copy of " + originalName + "\n\nOriginal File Name: " + originalName + "\n" + "Original Document URL: " + fileURL + "\n\nNew Doc Name: " + newFileName + "\nNew Doc URL: " + newDriveURL);
    
   //Display Final Message to User telling them about email confirmation. 
   DocumentApp.getUi().alert("A Final Copy Has Been Created","A final copy of the doc has been successfully created.\n\nA confirmation email will be sent to you with additional details.",DocumentApp.getUi().ButtonSet.OK);
@@ -146,7 +146,7 @@ function FinalizeDoc() {
   //Send email to the owner with details on the orginal and final documents. 
   var ownerEmail = Session.getActiveUser().getEmail();
   var htmlBody = new String("Document Finalized: " + originalName, "Original File Name" + "\n" + "Original URL " + fileURL);
-   MailApp.sendEmail(ownerEmail,"donotreply@edmonton.ca","Document Finalized: " + originalName, "Original File Name: " + originalName + "\n" + "Original Document URL: " + fileURL);
+   MailApp.sendEmail(ownerEmail,"donotreply@edmonton.ca","Document Finalized: " + originalName, "This is a notification from Final Doc confirming you have removed editor access and made a final copy of " + originalName + "\n\nOriginal File Name: " + originalName + "\n" + "Original Document URL: " + fileURL + "\n\nNew Doc Name: " + newFileName + "\nNew Doc URL: " + newDriveURL + "\n\nEditors Removed: " + editors + "\nNote: The owner of the doc will not be removed as an editor.");
    
   //Display Final Message to User telling them about email confirmation. 
   DocumentApp.getUi().alert("Document has been finalized","All editor access has been removed and a final copy of the doc has been successfully created.\n\nA confirmation email will be sent to you with additional details.",DocumentApp.getUi().ButtonSet.OK);
