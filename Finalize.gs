@@ -20,6 +20,7 @@ function showSidebar()
   
 }
 
+//This function removes all editor access from the document and sends an email to the user with details on who was removed. 
 function RemoveEditors() {
     //Find active document to be finalized and look up list of editors
   var currentDoc = DocumentApp.getActiveDocument();
@@ -58,6 +59,49 @@ function RemoveEditors() {
  } else {
    Logger.log('The user clicked the close button in the dialog\'s title bar.');
  }
+  
+}
+
+//This function will make a copy of the original document, save it to the users drive and send an email with the details. 
+function MakeFinalCopy() {
+  
+  //Find active document to be finalized and look up list of editors
+  var currentDoc = DocumentApp.getActiveDocument();
+  var editors = currentDoc.getEditors();
+  
+  //Confirm User is sure they want to finalize the document. Warn them that revisions and editors will be removed.
+  var ui = DocumentApp.getUi();
+  var response = ui.alert('Confirm Create Copy', 'Are you sure you want to create a final copy of this doc? \n Doing so will create a new version that has no revision history. The original document will not be changed.', ui.ButtonSet.YES_NO);
+  
+   if (response == ui.Button.YES) {
+   Logger.log('The user has confirmed finalization', response.YES);
+  
+  //Lookup the info of the original document 
+  var fileID = DocumentApp.getActiveDocument().getId();
+  var fileURL = DocumentApp.getActiveDocument().getUrl();
+  var originalName = DocumentApp.getActiveDocument().getName();
+  var newFileName = (DocumentApp.getActiveDocument().getName().concat(" - Final"));
+  
+  //Make a copy of the original file
+  var fileDriveID = DriveApp.getFileById(fileID);
+  var newDriveFile = fileDriveID.makeCopy(newFileName); 
+  var newDriveURL = newDriveFile.getUrl();
+  Logger.log(newDriveURL);
+  
+    //Send email to the owner with details on the orginal and final documents. 
+  var ownerEmail = Session.getActiveUser().getEmail();
+  var htmlBody = new String("Document Finalized: " + originalName, "Original File Name" + "\n" + "Original URL " + fileURL);
+   MailApp.sendEmail(ownerEmail,"donotreply@edmonton.ca","Document Finalized: " + originalName, "Original File Name: " + originalName + "\n" + "Original Document URL: " + fileURL);
+   
+  //Display Final Message to User telling them about email confirmation. 
+  DocumentApp.getUi().alert("A Final Copy Has Been Created","A final copy of the doc has been successfully created.\n\nA confirmation email will be sent to you with additional details.",DocumentApp.getUi().ButtonSet.OK);
+     
+ } else if (response == ui.Button.NO) {
+   Logger.log('The user did not confirm final copy process');
+ } else {
+   Logger.log('The user clicked the close button in the dialog\'s title bar.');
+ }
+  
   
 }
 
